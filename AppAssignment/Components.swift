@@ -16,6 +16,50 @@ struct GradientHeaderCard<Content: View>: View {
 	}
 }
 
+// Refined header card styled to match the screenshot (deep blue → violet, glossy, rounded)
+struct PortfolioHeaderCard<Content: View>: View {
+	@Environment(\.colorScheme) private var colorScheme
+	@ViewBuilder var content: () -> Content
+
+	private var baseGradient: LinearGradient {
+		// Deep blue to violet
+		LinearGradient(
+			colors: [
+				Color(red: 0.17, green: 0.28, blue: 0.98),
+				Color(red: 0.42, green: 0.35, blue: 0.98)
+			],
+			startPoint: .topLeading,
+			endPoint: .bottomTrailing
+		)
+	}
+
+	var body: some View {
+		ZStack {
+			RoundedRectangle(cornerRadius: 32, style: .continuous)
+				.fill(baseGradient)
+				.shadow(color: .black.opacity(0.35), radius: 24, x: 0, y: 12)
+				.overlay(
+					// Glossy sweep overlay
+					LinearGradient(
+						colors: [Color.white.opacity(0.18), Color.white.opacity(0.02)],
+						startPoint: .topLeading,
+						endPoint: .bottomTrailing
+					)
+					.clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+				)
+				.overlay(
+					RoundedRectangle(cornerRadius: 32, style: .continuous)
+						.stroke(Color.white.opacity(colorScheme == .dark ? 0.08 : 0.2), lineWidth: 1)
+				)
+
+			VStack(alignment: .leading, spacing: 12) {
+				content()
+			}
+			.padding(22)
+		}
+	}
+}
+
 struct TimeSelector: View {
 	@Binding var selected: String
 	private let options = ["1h","8h","1d","1w","1m","6m","1y"]
@@ -64,6 +108,49 @@ struct AssetCard: View {
 		}
 		.padding()
 		.background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color.white.opacity(0.04)))
+	}
+}
+
+struct AssetCardLarge: View {
+	var asset: Asset
+
+	var body: some View {
+		VStack(alignment: .leading, spacing: 12) {
+			HStack(spacing: 12) {
+				ZStack {
+					Circle().fill(Color.orange)
+						.frame(width: 52, height: 52)
+					Image(systemName: asset.iconSystemName)
+						.font(.system(size: 24, weight: .bold))
+						.foregroundStyle(.white)
+				}
+				Text("\(asset.name) (\(asset.symbol))")
+					.font(.headline)
+					.foregroundStyle(.primary)
+					.lineLimit(1)
+					.minimumScaleFactor(0.7)
+				Spacer()
+			}
+			HStack(alignment: .firstTextBaseline) {
+				Text(asset.priceINR.inrString)
+					.font(.subheadline)
+					.foregroundStyle(.secondary)
+				Spacer()
+				Text(String(format: "%@%.1f%%", asset.changePercent >= 0 ? "+" : "", asset.changePercent))
+					.font(.footnote.weight(.semibold))
+					.foregroundStyle(asset.changePercent >= 0 ? .green : .red)
+			}
+		}
+		.padding(16)
+		.frame(width: 220)
+		.background(
+			RoundedRectangle(cornerRadius: 22, style: .continuous)
+				.fill(Color.white.opacity(0.05))
+		)
+		.overlay(
+			RoundedRectangle(cornerRadius: 22, style: .continuous)
+				.stroke(Color.white.opacity(0.08), lineWidth: 1)
+		)
 	}
 }
 

@@ -9,7 +9,7 @@ struct PortfolioDashboardScreen: View {
 		NavigationStack {
 			ScrollView(.vertical, showsIndicators: false) {
 				VStack(alignment: .leading, spacing: 20) {
-					GradientHeaderCard {
+					PortfolioHeaderCard {
 						HStack {
 							Button(action: {}) { Image(systemName: "line.3.horizontal").font(.title2) }
 							Spacer()
@@ -17,7 +17,7 @@ struct PortfolioDashboardScreen: View {
 						}
 						Text("Portfolio Value  >")
 							.font(.subheadline)
-							.foregroundStyle(Color.white.opacity(0.8))
+							.foregroundStyle(Color.white.opacity(0.9))
 
 						HStack(alignment: .center, spacing: 12) {
 							Text(showINR ? MockData.portfolioINR.inrString : "\(MockData.portfolioBTC.format(maxFraction: 3)) BTC")
@@ -50,14 +50,25 @@ struct PortfolioDashboardScreen: View {
 							.fill(Color.white.opacity(0.03))
 							.frame(height: 220)
 							.overlay(
-								SimpleLineChart(values: mockTrend.map { $0 * 100 })
-									.padding(.horizontal, 16)
+								PortfolioChart(
+									barValues: [80, 120, 100, 140, 130, 150, 160, 180, 170, 190, 210],
+									lineValues: mockTrend.map { $0 * 100 },
+									highlightIndex: 8
+								)
+								.padding(.horizontal, 16)
 							)
 					}
 
-					HStack(spacing: 16) {
-						AssetCard(asset: MockData.assets[0])
-						AssetCard(asset: MockData.assets[1])
+					Text("Your Assets")
+						.font(.headline)
+
+					ScrollView(.horizontal, showsIndicators: false) {
+						HStack(spacing: 16) {
+							ForEach(MockData.assets) { asset in
+								AssetCardLarge(asset: asset)
+							}
+						}
+						.padding(.horizontal, 4)
 					}
 
 					Text("Recent Transactions")

@@ -34,7 +34,9 @@ struct ExchangeRateSummary {
 enum MockData {
 	static let assets: [Asset] = [
 		Asset(symbol: "BTC", name: "Bitcoin", iconSystemName: "bitcoinsign.circle.fill", priceINR: 7562500, changePercent: 3.2),
-		Asset(symbol: "ETH", name: "Ether", iconSystemName: "e.circle.fill", priceINR: 179100, changePercent: -1.1)
+		Asset(symbol: "ETH", name: "Ether", iconSystemName: "e.circle.fill", priceINR: 179100, changePercent: -1.1),
+		Asset(symbol: "SOL", name: "Solana", iconSystemName: "s.circle.fill", priceINR: 12500, changePercent: 2.4),
+		Asset(symbol: "USDT", name: "Tether", iconSystemName: "t.circle.fill", priceINR: 83.1, changePercent: 0.0)
 	]
 
 	static let transactions: [TransactionItem] = [
@@ -53,9 +55,10 @@ extension Double {
 	var inrString: String {
 		let f = NumberFormatter()
 		f.numberStyle = .currency
-		f.currencySymbol = "₹"
+		f.locale = Locale(identifier: "en_IN")
+		f.currencySymbol = "₹ "
 		f.maximumFractionDigits = 2
-		return f.string(from: NSNumber(value: self)) ?? "₹0.00"
+		return f.string(from: NSNumber(value: self)) ?? "₹ 0.00"
 	}
 
 	func format(maxFraction: Int = 6) -> String {

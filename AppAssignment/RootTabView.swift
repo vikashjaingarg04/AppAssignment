@@ -30,6 +30,10 @@ struct RootTabView: View {
 	@State private var showCenterAction: Bool = false
 	@State private var showAnalyticsPeek: Bool = false
 
+	init() {
+		UITabBar.appearance().isHidden = true
+	}
+
 	var body: some View {
 		ZStack(alignment: .bottom) {
 			TabView(selection: $selectedTab) {
@@ -174,19 +178,105 @@ struct TabButton: View {
 }
 
 struct CenterActionSheet: View {
+	@Environment(\.dismiss) private var dismiss
+
 	var body: some View {
 		NavigationStack {
-			VStack(spacing: 20) {
+			VStack(alignment: .leading, spacing: 16) {
 				Text("Quick Actions")
+					.font(.title3.weight(.semibold))
+
+				LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
+					QuickActionCard(icon: "arrow.up", title: "Send", subtitle: "Crypto out") {
+						UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+						dismiss()
+					}
+					QuickActionCard(icon: "arrow.down", title: "Receive", subtitle: "Crypto in") {
+						UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+						dismiss()
+					}
+					QuickActionCard(icon: "arrow.2.squarepath", title: "Exchange", subtitle: "Swap now") {
+						UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+						dismiss()
+					}
+					QuickActionCard(icon: "qrcode", title: "Scan", subtitle: "Pay/Receive") {
+						UIImpactFeedbackGenerator(style: .light).impactOccurred()
+						dismiss()
+					}
+				}
+
+				Text("Shortcuts")
 					.font(.headline)
-				Button("Send") {}
-				Button("Receive") {}
-				Button("Exchange") {}
-				Spacer()
+				HStack(spacing: 12) {
+					MiniPill(icon: "clock.arrow.circlepath", title: "History") { dismiss() }
+					MiniPill(icon: "star.fill", title: "Favorites") { dismiss() }
+					MiniPill(icon: "gear", title: "Settings") { dismiss() }
+				}
+				.padding(.top, 4)
+
+				Spacer(minLength: 0)
 			}
-			.padding()
+			.padding(16)
 			.navigationTitle("Actions")
 		}
+	}
+}
+
+private struct QuickActionCard: View {
+	var icon: String
+	var title: String
+	var subtitle: String
+	var action: () -> Void
+
+	var body: some View {
+		Button(action: action) {
+			VStack(alignment: .leading, spacing: 10) {
+				ZStack {
+					RoundedRectangle(cornerRadius: 14, style: .continuous)
+						.fill(Color.white.opacity(0.08))
+						.frame(width: 44, height: 44)
+					Image(systemName: icon)
+						.font(.system(size: 18, weight: .semibold))
+				}
+				Text(title)
+					.font(.subheadline.weight(.semibold))
+				Text(subtitle)
+					.font(.caption)
+					.foregroundStyle(.secondary)
+			}
+			.padding(14)
+			.frame(maxWidth: .infinity, minHeight: 110, alignment: .topLeading)
+			.background(
+				RoundedRectangle(cornerRadius: 20, style: .continuous)
+					.fill(.ultraThinMaterial)
+			)
+			.overlay(
+				RoundedRectangle(cornerRadius: 20, style: .continuous)
+					.stroke(Color.white.opacity(0.12), lineWidth: 1)
+			)
+		}
+		.buttonStyle(.plain)
+	}
+}
+
+private struct MiniPill: View {
+	var icon: String
+	var title: String
+	var action: () -> Void
+
+	var body: some View {
+		Button(action: action) {
+			HStack(spacing: 8) {
+				Image(systemName: icon)
+					.font(.system(size: 14, weight: .semibold))
+				Text(title)
+					.font(.caption.weight(.semibold))
+			}
+			.padding(.horizontal, 12)
+			.padding(.vertical, 8)
+			.background(Capsule().fill(Color.white.opacity(0.08)))
+		}
+		.buttonStyle(.plain)
 	}
 }
 
