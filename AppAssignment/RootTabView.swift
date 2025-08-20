@@ -28,6 +28,7 @@ enum AppTab: Int, CaseIterable {
 struct RootTabView: View {
 	@State private var selectedTab: AppTab = .analytics
 	@State private var showCenterAction: Bool = false
+	@State private var showAnalyticsPeek: Bool = false
 
 	var body: some View {
 		ZStack(alignment: .bottom) {
@@ -48,15 +49,23 @@ struct RootTabView: View {
 					.tag(AppTab.wallet)
 					.tabItem { Label(AppTab.wallet.title, systemImage: AppTab.wallet.systemImage) }
 			}
-			.opacity(0) // hide default tab bar visuals
+			.toolbar(.hidden, for: .tabBar)
 
 			CustomGlassTabBar(selectedTab: $selectedTab, centerAction: {
 				showCenterAction = true
+			}, onReselect: { tab in
+				if tab == .analytics {
+					showAnalyticsPeek = true
+				}
 			})
 		}
 		.ignoresSafeArea(.keyboard)
 		.sheet(isPresented: $showCenterAction) {
 			CenterActionSheet()
+		}
+		.sheet(isPresented: $showAnalyticsPeek) {
+			AnalyticsPeekSheet()
+				.presentationDetents([.height(360), .large])
 		}
 	}
 }
@@ -64,18 +73,23 @@ struct RootTabView: View {
 struct CustomGlassTabBar: View {
 	@Binding var selectedTab: AppTab
 	var centerAction: () -> Void
+	var onReselect: ((AppTab) -> Void)? = nil
 
 	@Environment(\.colorScheme) private var colorScheme
 
 	var body: some View {
 		HStack(spacing: 14) {
-			// Glass pill with tabs
 			HStack(spacing: 0) {
 				ForEach(AppTab.allCases, id: \.self) { tab in
-					TabButton(tab: tab, isSelected: selectedTab == tab) {
+					let isSel = (selectedTab == tab)
+					TabButton(tab: tab, isSelected: isSel) {
 						UIImpactFeedbackGenerator(style: .light).impactOccurred()
-						withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
-							selectedTab = tab
+						if isSel {
+							onReselect?(tab)
+						} else {
+							withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+								selectedTab = tab
+							}
 						}
 					}
 				}
@@ -84,15 +98,14 @@ struct CustomGlassTabBar: View {
 			.padding(.vertical, 10)
 			.background(
 				RoundedRectangle(cornerRadius: 36, style: .continuous)
-					.fill(Color.black.opacity(0.88))
+					.fill(colorScheme == .dark ? Color.black.opacity(0.88) : Color.white.opacity(0.96))
 			)
 			.overlay(
 				RoundedRectangle(cornerRadius: 36, style: .continuous)
-					.strokeBorder(Color.black.opacity(0.9), lineWidth: 2)
+					.strokeBorder(colorScheme == .dark ? Color.black.opacity(0.9) : Color.black.opacity(0.1), lineWidth: 2)
 			)
-			.shadow(color: .black.opacity(0.5), radius: 30, x: 0, y: 10)
+			.shadow(color: Color.black.opacity(colorScheme == .dark ? 0.5 : 0.12), radius: 30, x: 0, y: 10)
 
-			// Separate floating plus button
 			Button(action: {
 				UIImpactFeedbackGenerator(style: .medium).impactOccurred()
 				centerAction()
@@ -115,30 +128,42 @@ struct TabButton: View {
 	var isSelected: Bool
 	var action: () -> Void
 
-	private var unselectedColor: Color { Color.white.opacity(0.65) }
+	@Environment(\.colorScheme) private var colorScheme
+
+	private var unselectedColor: Color { colorScheme == .dark ? Color.white.opacity(0.65) : Color.gray.opacity(0.6) }
+	private var selectedContentColor: Color { colorScheme == .dark ? .white : Color.blue }
 
 	var body: some View {
 		Button(action: action) {
 			ZStack {
 				if isSelected {
-					let fillStyle: AnyShapeStyle = AnyShapeStyle(LinearGradient(colors: [
-						Color(red: 0.20, green: 0.31, blue: 0.95),
-						Color(red: 0.16, green: 0.24, blue: 0.78)
-					], startPoint: .topLeading, endPoint: .bottomTrailing))
+					let fillStyle: AnyShapeStyle = {
+						if colorScheme == .dark {
+							return AnyShapeStyle(LinearGradient(colors: [
+								Color(red: 0.20, green: 0.31, blue: 0.95),
+								Color(red: 0.16, green: 0.24, blue: 0.78)
+							], startPoint: .topLeading, endPoint: .bottomTrailing))
+						} else {
+							return AnyShapeStyle(LinearGradient(colors: [
+								Color(red: 0.86, green: 0.88, blue: 1.0),
+								Color(red: 0.78, green: 0.80, blue: 1.0)
+							], startPoint: .topLeading, endPoint: .bottomTrailing))
+						}
+					}()
 					RoundedRectangle(cornerRadius: 26, style: .continuous)
 						.fill(fillStyle)
 						.frame(width: 100, height: 50)
 						.overlay(
-							RoundedRectangle(cornerRadius: 26, style: .continuous).strokeBorder(Color.white.opacity(0.15), lineWidth: 1)
+							RoundedRectangle(cornerRadius: 26, style: .continuous).strokeBorder((colorScheme == .dark ? Color.white.opacity(0.15) : Color.black.opacity(0.06)), lineWidth: 1)
 						)
 				}
 				VStack(spacing: 4) {
 					Image(systemName: tab.systemImage)
 						.font(.system(size: 12, weight: .semibold))
-						.foregroundStyle(isSelected ? .white : unselectedColor)
+						.foregroundStyle(isSelected ? selectedContentColor : unselectedColor)
 					Text(tab.title)
 						.font(.system(size: 9, weight: .semibold))
-						.foregroundStyle(isSelected ? .white : unselectedColor)
+						.foregroundStyle(isSelected ? selectedContentColor : unselectedColor)
 				}
 				.frame(maxWidth: .infinity)
 			}
@@ -161,6 +186,43 @@ struct CenterActionSheet: View {
 			}
 			.padding()
 			.navigationTitle("Actions")
+		}
+	}
+}
+
+struct AnalyticsPeekSheet: View {
+	var body: some View {
+		NavigationStack {
+			VStack(alignment: .leading, spacing: 16) {
+				Text("Portfolio Overview")
+					.font(.headline)
+					.padding(.top, 4)
+				HStack(alignment: .firstTextBaseline, spacing: 8) {
+					Text(MockData.portfolioINR.inrString)
+						.font(.system(size: 28, weight: .bold, design: .rounded))
+					Text("+4.6%")
+						.font(.subheadline.weight(.semibold))
+						.foregroundStyle(.green)
+				}
+				ScrollView(.horizontal, showsIndicators: false) {
+					HStack(spacing: 12) {
+						AssetCard(asset: MockData.assets[0])
+							.frame(width: 240)
+						AssetCard(asset: MockData.assets[1])
+							.frame(width: 240)
+					}
+				}
+				Text("Recent Transactions")
+					.font(.headline)
+				VStack(spacing: 10) {
+					ForEach(MockData.transactions) { tx in
+						TransactionRow(item: tx)
+					}
+				}
+				Spacer(minLength: 0)
+			}
+			.padding(16)
+			.navigationTitle("Analytics")
 		}
 	}
 }
