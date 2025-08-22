@@ -11,8 +11,8 @@ This SwiftUI app recreates the provided crypto portfolio/exchange UI with pixel-
 The app launches with a custom glass bottom bar. Tabs:
 - Analytics: Portfolio Dashboard
 - Exchange: Transactions Summary
-- Record: Placeholder
-- Wallet: Placeholder
+- Record:  Transactions Record
+- Wallet: Wallet Money and tokens
 
 ## Structure
 
@@ -23,7 +23,8 @@ The app launches with a custom glass bottom bar. Tabs:
 - `PortfolioDashboardScreen.swift`: Screen 1
 - `TransactionsSummaryScreen.swift`: Screen 2
 - `ExchangeScreen.swift`: Screen 3
-- `RecordScreen.swift`, `WalletScreen.swift`: Placeholders
+- `RecordScreen.swift` : Sccreen 4
+
 
 ## Notes
 
@@ -37,3 +38,11 @@ The app launches with a custom glass bottom bar. Tabs:
 - Add real graph data & gestures
 - Improve glass blur using UIVisualEffectView if needed
 - Persist user preferences (selected timeframe/currency) 
+
+
+
+## ScreenShots 
+
+
+
+/var/folders/dv/s98ghslj74q6x0w1y2__h9hm0000gn/T/simulator_screenshot_C1320AC3-7D25-4BA6-9B70-76DB6050E327.png
