@@ -26,10 +26,12 @@ The app launches with a custom glass bottom bar. Tabs:
 - `RecordScreen.swift` : Sccreen 4
 
 
+
 ## Notes
 
 - Mock trend graph is an animated line (`SimpleLineChart`)
 - Haptic feedback added to key buttons
+
 - Dark mode optimized; light mode passable
 - Navigation: Transactions → Exchange
 
@@ -42,16 +44,11 @@ The app launches with a custom glass bottom bar. Tabs:
 
 
 ## ScreenShots 
-<img width="302" height="655" alt="simulator_screenshot_63CA075F-157C-42D6-B004-B3DC80B1D237" src="https://github.com/user-attachments/assets/5
-<img width="302" height="655" alt="simulator_screenshot_81EA7467-1748-46CE-A572-D48CC8815871" src="https://github.com/user-attachments/assets/1aef5ccf-969a-4dce-8a96-63094f52e937" />
-eba4843-0b50-4398-85a9-d3b475bf52b5" />
-<img width="302" height="655" alt="simulator_screenshot_D4FB3C04-FC63-4AB8-B39C-304CFE73C47C" src="https://github.com/user-attachments/assets/7423d466-1996-4c60-a0d0-6c53231255a3" />
-
-<img width="302" height="655" alt="simulator_screenshot_3325A9BE-EA8D-480C-AE5D-C6F17C09240E" src="https://github.com/user-attachments/assets/87d17669-2175-4bd1-8d0e-236fb35f02ec" />
-
-
-<img width="302" height="655" alt="simulator_screenshot_5B79BE13-327C-4A7A-AC53-ABA023F707F7" src="https://github.com/user-attachments/assets/3bc9bbee-dd22-45fd-a3e3-1884d21cc441" />
-
-
+<img width="302" height="655" alt="simulator_screenshot_78BFE3CB-AE79-4181-882D-1D5AEC6CB16A" src="https://github.com/user-attachments/assets/b64907b3-eb3d-4dde-b053-bcdabc3d6712" />
+<img width="302" height="655" alt="simulator_screenshot_B85C05BD-1E38-4E90-A558-05D7E7FE755C" src="https://github.com/user-attachments/assets/4ccd609a-88e7-4a4c-9299-9cb112843fa7" />
+<img width="302" height="655" alt="simulator_screenshot_6411517F-A996-4B0D-BF03-8436ECA72195" src="https://github.com/user-attachments/assets/50079e82-4768-4dc2-be77-9e5997965bcc" />
+<img width="302" height="655" alt="simulator_screenshot_EEA356B9-74E5-4DAC-B052-D76804E33E3B" src="https://github.com/user-attachments/assets/c1338036-5a76-49a3-9391-3f5bde517f7e" />
+<img width="302" height="655" alt="Simulator Screenshot - iPhone 16 Pro - 2025-08-22 at 14 13 25" src="https://github.com/user-attachments/assets/c814a704-d72a-4643-96d5-d152f87cd986" />
+<img width="302" height="655" alt="Simulator Screenshot - iPhone 16 Pro - 2025-08-22 at 14 13 54" src="https://github.com/user-attachments/assets/37712c29-1b47-400d-bd1e-3183ea8493fa" />
 
 
