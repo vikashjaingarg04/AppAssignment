@@ -42,10 +42,11 @@ The app launches with a custom glass bottom bar. Tabs:
 
 
 ## ScreenShots 
-<img width="302" height="655" alt="simulator_screenshot_63CA075F-157C-42D6-B004-B3DC80B1D237" src="https://github.com/user-attachments/assets/5<img width="302" height="655" alt="simulator_screenshot_81EA7467-1748-46CE-A572-D48CC8815871" src="https://github.com/user-attachments/assets/1aef5ccf-969a-4dce-8a96-63094f52e937" />
-eba4843-0b50-4398-85a9-d3b475bf52b5" /><img width="302" height="655" alt="simulator_screenshot_D4FB3C04-FC63-4AB8-B39C-304CFE73C47C" src="https://github.com/user-attachments/assets/7423d466-1996-4c60-a0d0-6c53231255a3" />
+<img width="302" height="655" alt="simulator_screenshot_63CA075F-157C-42D6-B004-B3DC80B1D237" src="https://github.com/user-attachments/assets/5
+<img width="302" height="655" alt="simulator_screenshot_81EA7467-1748-46CE-A572-D48CC8815871" src="https://github.com/user-attachments/assets/1aef5ccf-969a-4dce-8a96-63094f52e937" />
+eba4843-0b50-4398-85a9-d3b475bf52b5" />
+<img width="302" height="655" alt="simulator_screenshot_D4FB3C04-FC63-4AB8-B39C-304CFE73C47C" src="https://github.com/user-attachments/assets/7423d466-1996-4c60-a0d0-6c53231255a3" />
 
-![simulator_screenshot_4909F028-CCBA-46EB-BD5B-DB0F35D67883](https://github.com/user-attachments/assets/b49d87bd-2a8c-4aca-9fa4-9fb95ed53e34)
 <img width="302" height="655" alt="simulator_screenshot_3325A9BE-EA8D-480C-AE5D-C6F17C09240E" src="https://github.com/user-attachments/assets/87d17669-2175-4bd1-8d0e-236fb35f02ec" />
 
 
