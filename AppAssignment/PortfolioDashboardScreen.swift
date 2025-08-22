@@ -21,7 +21,7 @@ struct PortfolioDashboardScreen: View {
 
 						HStack(alignment: .center, spacing: 12) {
 							Text(showINR ? MockData.portfolioINR.inrString : "\(MockData.portfolioBTC.format(maxFraction: 3)) BTC")
-								.font(.system(size: 36, weight: .bold, design: .rounded))
+								.font(.system(size: 36, weight: .bold))
 								.foregroundStyle(.white)
 							Spacer()
 							HStack(spacing: 0) {
@@ -53,7 +53,8 @@ struct PortfolioDashboardScreen: View {
 								PortfolioChart(
 									barValues: [80, 120, 100, 140, 130, 150, 160, 180, 170, 190, 210],
 									lineValues: mockTrend.map { $0 * 100 },
-									highlightIndex: 8
+									highlightIndex: 8,
+									animationKey: timeRange.hashValue
 								)
 								.padding(.horizontal, 16)
 							)
@@ -83,7 +84,7 @@ struct PortfolioDashboardScreen: View {
 				}
 				.padding(16)
 			}
-			.background(Color.black)
+			.background(AppBackgroundWithGlow())
 			.navigationBarHidden(true)
 		}
 	}

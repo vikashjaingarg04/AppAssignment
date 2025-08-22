@@ -60,6 +60,41 @@ struct PortfolioHeaderCard<Content: View>: View {
 	}
 }
 
+// Stacked gradient header card (blue→violet) with a small bottom lip, content centered
+struct StackedTealBlueHeaderCard<Content: View>: View {
+	@ViewBuilder var content: () -> Content
+
+	private var baseGradient: LinearGradient {
+		LinearGradient(
+			colors: [
+				Color(red: 0.36, green: 0.33, blue: 1.0),
+				Color(red: 0.16, green: 0.20, blue: 0.45)
+			],
+			startPoint: .topLeading,
+			endPoint: .bottomTrailing
+		)
+	}
+
+	var body: some View {
+		ZStack {
+			RoundedRectangle(cornerRadius: 28, style: .continuous)
+				.fill(baseGradient)
+				.overlay(
+					LinearGradient(
+						colors: [Color.white.opacity(0.18), Color.clear],
+						startPoint: .topLeading,
+						endPoint: .bottomTrailing
+					)
+					.clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+				)
+			VStack(spacing: 12) {
+				content()
+			}
+			.padding(20)
+		}
+	}
+}
+
 struct TimeSelector: View {
 	@Binding var selected: String
 	private let options = ["1h","8h","1d","1w","1m","6m","1y"]
@@ -108,6 +143,38 @@ struct AssetCard: View {
 		}
 		.padding()
 		.background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color.white.opacity(0.04)))
+	}
+}
+
+// Shared purple bottom glow background that adapts to theme
+struct AppBackgroundWithGlow: View {
+	@EnvironmentObject private var theme: ThemeManager
+	@Environment(\.colorScheme) private var colorScheme
+
+	var body: some View {
+		ZStack {
+			theme.palette.appBackground
+			VStack {
+				Spacer()
+				Ellipse()
+					.fill(
+						LinearGradient(
+							colors: [
+								Color(red: 0.36, green: 0.33, blue: 1.0).opacity(colorScheme == .dark ? 0.50 : 0.30),
+								Color(red: 0.23, green: 0.20, blue: 0.55).opacity(colorScheme == .dark ? 0.35 : 0.22),
+								Color.clear
+							],
+							startPoint: .bottom,
+							endPoint: .top
+						)
+					)
+					.frame(height: 360)
+					.blur(radius: 50)
+					.padding(.horizontal, -60)
+					.offset(y: 80)
+			}
+		}
+		.ignoresSafeArea()
 	}
 }
 

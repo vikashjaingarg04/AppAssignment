@@ -5,6 +5,9 @@ struct PortfolioChart: View {
 	var lineValues: [Double]
 	var highlightIndex: Int
 	var lineColor: Color = Color(red: 0.23, green: 0.85, blue: 0.55)
+	var animationKey: Int = 0
+
+	@State private var drawProgress: CGFloat = 0
 
 	var body: some View {
 		GeometryReader { geo in
@@ -42,8 +45,15 @@ struct PortfolioChart: View {
 					CGPoint(x: inset + CGFloat(idx) * stepX, y: yPosition(for: v, min: minVal, span: span, inset: inset, height: H))
 				}
 				catmullRomBezierPath(points: points)
+					.trim(from: 0, to: drawProgress)
 					.stroke(lineColor.opacity(0.95), style: StrokeStyle(lineWidth: 1.7, lineCap: .round, lineJoin: .round))
 					.shadow(color: lineColor.opacity(0.35), radius: 4)
+					.animation(.easeInOut(duration: 1.0), value: drawProgress)
+					.onAppear { drawProgress = 1 }
+					.onChange(of: animationKey) { _ in
+						drawProgress = 0
+						DispatchQueue.main.async { drawProgress = 1 }
+					}
 
 				// Highlight marker exactly at the line point
 				let idx = min(max(highlightIndex, 0), count - 1)
@@ -97,7 +107,8 @@ struct PortfolioChart: View {
 	PortfolioChart(
 		barValues: [10,20,14,18,22,17,23,28,25,30,33],
 		lineValues: [10,18,15,20,19,22,27,31,30,34,36],
-		highlightIndex: 8
+		highlightIndex: 8,
+		animationKey: 1
 	)
 	.frame(height: 220)
 	.background(Color.black)

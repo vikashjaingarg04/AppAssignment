@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct AppAssignmentApp: App {
+    @StateObject private var theme = ThemeManager()
     var body: some Scene {
         WindowGroup {
             RootTabView()
+                .environmentObject(theme)
+                .preferredColorScheme(theme.activeColorScheme)
         }
     }
 }

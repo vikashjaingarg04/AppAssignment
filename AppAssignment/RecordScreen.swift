@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RecordScreen: View {
 	@State private var selectedFilter: RecordFilter = .all
+	@EnvironmentObject private var theme: ThemeManager
 
 	var filteredTransactions: [TransactionItem] {
 		switch selectedFilter {
@@ -35,7 +36,7 @@ struct RecordScreen: View {
 				}
 				.padding(16)
 			}
-			.background(Color.black)
+			.background(AppBackgroundWithGlow())
 		}
 	}
 }
@@ -62,4 +63,8 @@ private struct FilterChip: View {
 	}
 }
 
-#Preview { RecordScreen() } 
+#Preview {
+	RecordScreen()
+		.environmentObject(ThemeManager())
+		.background(AppBackgroundWithGlow())
+} 

@@ -26,9 +26,10 @@ enum AppTab: Int, CaseIterable {
 }
 
 struct RootTabView: View {
-	@State private var selectedTab: AppTab = .analytics
+	@State private var selectedTab: AppTab = .exchange
 	@State private var showCenterAction: Bool = false
 	@State private var showAnalyticsPeek: Bool = false
+    @EnvironmentObject private var theme: ThemeManager
 
 	init() {
 		UITabBar.appearance().isHidden = true

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WalletScreen: View {
 	@State private var segment: WalletSegment = .tokens
+	@EnvironmentObject private var theme: ThemeManager
 
 	var body: some View {
 		NavigationStack {
@@ -20,7 +21,7 @@ struct WalletScreen: View {
 							SegmentedPill(selected: $segment)
 						}
 						Text(MockData.portfolioINR.inrString)
-							.font(.system(size: 32, weight: .bold, design: .rounded))
+							.font(.system(size: 32, weight: .bold))
 							.foregroundStyle(.white)
 					}
 
@@ -35,7 +36,7 @@ struct WalletScreen: View {
 				}
 				.padding(16)
 			}
-			.background(Color.black)
+			.background(AppBackgroundWithGlow())
 		}
 	}
 }
@@ -61,4 +62,8 @@ private struct SegmentedPill: View {
 	}
 }
 
-#Preview { WalletScreen() } 
+#Preview {
+	WalletScreen()
+		.environmentObject(ThemeManager())
+		.background(AppBackgroundWithGlow())
+} 
