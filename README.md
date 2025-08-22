@@ -49,7 +49,7 @@ eba4843-0b50-4398-85a9-d3b475bf52b5" /><img width="1206" height="2622" alt="simu
 <img width="402" height="874" alt="simulator_screenshot_3325A9BE-EA8D-480C-AE5D-C6F17C09240E" src="https://github.com/user-attachments/assets/87d17669-2175-4bd1-8d0e-236fb35f02ec" />
 
 
-<img width="1206" height="2622" alt="simulator_screenshot_5B79BE13-327C-4A7A-AC53-ABA023F707F7" src="https://github.com/user-attachments/assets/3bc9bbee-dd22-45fd-a3e3-1884d21cc441" />
+<img width="302" height="655" alt="simulator_screenshot_5B79BE13-327C-4A7A-AC53-ABA023F707F7" src="https://github.com/user-attachments/assets/3bc9bbee-dd22-45fd-a3e3-1884d21cc441" />
 
 
 
