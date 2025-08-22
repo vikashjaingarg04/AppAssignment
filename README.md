@@ -39,6 +39,7 @@ The app launches with a custom glass bottom bar. Tabs:
 - Improve glass blur using UIVisualEffectView if needed
 - Persist user preferences (selected timeframe/currency) 
 
+![simulator_screenshot_4909F028-CCBA-46EB-BD5B-DB0F35D67883](https://github.com/user-attachments/assets/b49d87bd-2a8c-4aca-9fa4-9fb95ed53e34)
 
 
 ## ScreenShots 
